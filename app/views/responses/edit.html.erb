@@ -42,7 +42,7 @@
           Criteria
         </label>
 
-        <input type="text" id="criteria_id" name="criteria_id" placeholder="Criteria" class="form-control" value="<%= @response.criteria_id %>">
+        <%= select_tag(:criteria_id, options_from_collection_for_select(Criterium.all, :id, :decision_id, @response.criteria_id), :class => "form-control") %>
       </div>
 
       <!-- Label and input for option_id -->
