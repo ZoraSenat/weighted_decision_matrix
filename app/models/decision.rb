@@ -1,6 +1,9 @@
 class Decision < ApplicationRecord
   # Direct associations
 
+  has_many   :options,
+             :dependent => :destroy
+
   has_many   :comments,
              :dependent => :destroy
 
