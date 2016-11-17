@@ -5,6 +5,8 @@ class Option < ApplicationRecord
 
   # Validations
 
+  validates :decision_id, :presence => true
+
   validates :name, :presence => true
 
 end
