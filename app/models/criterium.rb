@@ -1,6 +1,8 @@
 class Criterium < ApplicationRecord
   # Direct associations
 
+  belongs_to :decision
+
   # Indirect associations
 
   # Validations

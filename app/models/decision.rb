@@ -1,6 +1,9 @@
 class Decision < ApplicationRecord
   # Direct associations
 
+  has_many   :criteria,
+             :dependent => :destroy
+
   belongs_to :primary_stakeholder,
              :class_name => "User",
              :foreign_key => "user_id",
