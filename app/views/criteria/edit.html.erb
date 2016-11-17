@@ -33,7 +33,7 @@
           Decision
         </label>
 
-        <input type="text" id="decision_id" name="decision_id" placeholder="Decision" class="form-control" value="<%= @criterium.decision_id %>">
+        <%= select_tag(:decision_id, options_from_collection_for_select(Decision.all, :id, :user_id, @criterium.decision_id), :class => "form-control") %>
       </div>
 
       <!-- Label and input for name -->
