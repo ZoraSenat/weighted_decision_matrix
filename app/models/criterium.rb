@@ -5,4 +5,6 @@ class Criterium < ApplicationRecord
 
   # Validations
 
+  validates :weight, :presence => true
+
 end
