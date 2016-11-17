@@ -19,7 +19,7 @@
       <tr>
         <td><%= comment.decision.user_id %></td>
         <td><%= comment.message %></td>
-        <td><%= comment.user_id %></td>
+        <td><%= comment.user.email %></td>
         <td>
           <a href="/comments/<%= comment.id %>" class="btn btn-primary">Show</a>
           <a href="/comments/<%= comment.id %>/edit" class="btn btn-warning">Edit</a>
