@@ -51,7 +51,7 @@
           Option
         </label>
 
-        <input type="text" id="option_id" name="option_id" placeholder="Option" class="form-control" value="<%= @response.option_id %>">
+        <%= select_tag(:option_id, options_from_collection_for_select(Option.all, :id, :name, @response.option_id), :class => "form-control") %>
       </div>
 
       <button class="btn btn-warning">
