@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   # Direct associations
 
+  has_many   :comments,
+             :dependent => :nullify
+
   has_many   :responses,
              :dependent => :nullify
 
