@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   # Direct associations
 
+  belongs_to :company,
+             :counter_cache => true
+
   has_many   :comments,
              :dependent => :nullify
 
