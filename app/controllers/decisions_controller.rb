@@ -1,6 +1,7 @@
 class DecisionsController < ApplicationController
   def index
-    @decisions = current_user.decisions.page(params[:page]).per(10)
+    @q = current_user.decisions.ransack(params[:q])
+      @decisions = @q.result(:distinct => true).includes(:primary_stakeholder, :criteria, :comments, :options, :responses).page(params[:page]).per(10)
 
     render("decisions/index.html.erb")
   end

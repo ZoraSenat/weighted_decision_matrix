@@ -1,6 +1,7 @@
 class CriteriaController < ApplicationController
   def index
-    @criteria = Criterium.page(params[:page]).per(10)
+    @q = Criterium.ransack(params[:q])
+    @criteria = @q.result(:distinct => true).includes(:decision, :responses).page(params[:page]).per(10)
 
     render("criteria/index.html.erb")
   end

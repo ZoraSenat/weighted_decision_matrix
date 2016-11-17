@@ -1,6 +1,7 @@
 class OptionsController < ApplicationController
   def index
-    @options = Option.page(params[:page]).per(10)
+    @q = Option.ransack(params[:q])
+    @options = @q.result(:distinct => true).includes(:decision, :responses).page(params[:page]).per(10)
 
     render("options/index.html.erb")
   end
