@@ -5,4 +5,6 @@ class Option < ApplicationRecord
 
   # Validations
 
+  validates :name, :presence => true
+
 end
