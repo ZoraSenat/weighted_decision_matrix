@@ -1,4 +1,21 @@
 Rails.application.routes.draw do
+  # Routes for the Criterium resource:
+  # CREATE
+  get "/criteria/new", :controller => "criteria", :action => "new"
+  post "/create_criterium", :controller => "criteria", :action => "create"
+
+  # READ
+  get "/criteria", :controller => "criteria", :action => "index"
+  get "/criteria/:id", :controller => "criteria", :action => "show"
+
+  # UPDATE
+  get "/criteria/:id/edit", :controller => "criteria", :action => "edit"
+  post "/update_criterium/:id", :controller => "criteria", :action => "update"
+
+  # DELETE
+  get "/delete_criterium/:id", :controller => "criteria", :action => "destroy"
+  #------------------------------
+
   # Routes for the Response resource:
   # CREATE
   get "/responses/new", :controller => "responses", :action => "new"

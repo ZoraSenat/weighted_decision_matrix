@@ -1,0 +1,34 @@
+<div class="page-header">
+  <h1>
+    Criteria
+    <a href="/criteria/new" class="btn btn-lg btn-success">New Criterium</a>
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>Weight</th>
+        <th>Decision</th>
+        <th>Name</th>
+        <th>User</th>
+        <th>Actions</th>
+      </tr>
+
+      <% @criteria.each do |criterium| %>
+      <tr>
+        <td><%= criterium.weight %></td>
+        <td><%= criterium.decision_id %></td>
+        <td><%= criterium.name %></td>
+        <td><%= criterium.user_id %></td>
+        <td>
+          <a href="/criteria/<%= criterium.id %>" class="btn btn-primary">Show</a>
+          <a href="/criteria/<%= criterium.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_criterium/<%= criterium.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

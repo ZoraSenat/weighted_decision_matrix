@@ -1,0 +1,34 @@
+<div class="page-header">
+  <h3>Criterium #<%= @criterium.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mb-2">
+    <dl class="dl-horizontal">
+      <dt>Weight</dt>
+      <dd><%= @criterium.weight %></dd>
+
+      <dt>Decision</dt>
+      <dd><%= @criterium.decision_id %></dd>
+
+      <dt>Name</dt>
+      <dd><%= @criterium.name %></dd>
+
+      <dt>User</dt>
+      <dd><%= @criterium.user_id %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/criteria" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/criteria/<%= @criterium.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_criterium/<%= @criterium.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

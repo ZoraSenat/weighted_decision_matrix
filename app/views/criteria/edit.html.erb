@@ -1,0 +1,64 @@
+<!-- Validation failure messages -->
+<% if @criterium.errors.any? %>
+  <% @criterium.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Criterium #<%= @criterium.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_criterium/<%= @criterium.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for weight -->
+      <div class="form-group">
+        <label for="weight" class="control-label">
+          Weight
+        </label>
+
+        <input type="text" id="weight" name="weight" placeholder="Weight" class="form-control" value="<%= @criterium.weight %>">
+      </div>
+
+      <!-- Label and input for decision_id -->
+      <div class="form-group">
+        <label for="decision_id" class="control-label">
+          Decision
+        </label>
+
+        <input type="text" id="decision_id" name="decision_id" placeholder="Decision" class="form-control" value="<%= @criterium.decision_id %>">
+      </div>
+
+      <!-- Label and input for name -->
+      <div class="form-group">
+        <label for="name" class="control-label">
+          Name
+        </label>
+
+        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @criterium.name %>">
+      </div>
+
+      <!-- Label and input for user_id -->
+      <div class="form-group">
+        <label for="user_id" class="control-label">
+          User
+        </label>
+
+        <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= @criterium.user_id %>">
+      </div>
+
+      <button class="btn btn-warning">
+        Update Criterium
+      </button>
+      or
+      <a href="/criteria/<%= @criterium.id %>">Cancel</a>
+    </form>
+  </div>
+</div>
