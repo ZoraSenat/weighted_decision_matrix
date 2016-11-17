@@ -1,0 +1,31 @@
+<div class="page-header">
+  <h3>Option #<%= @option.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mb-2">
+    <dl class="dl-horizontal">
+      <dt>Name</dt>
+      <dd><%= @option.name %></dd>
+
+      <dt>Descriptions</dt>
+      <dd><%= @option.descriptions %></dd>
+
+      <dt>Decision</dt>
+      <dd><%= @option.decision_id %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/options" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/options/<%= @option.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_option/<%= @option.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

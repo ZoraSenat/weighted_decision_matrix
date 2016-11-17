@@ -1,0 +1,32 @@
+<div class="page-header">
+  <h1>
+    Options
+    <a href="/options/new" class="btn btn-lg btn-success">New Option</a>
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>Name</th>
+        <th>Descriptions</th>
+        <th>Decision</th>
+        <th>Actions</th>
+      </tr>
+
+      <% @options.each do |option| %>
+      <tr>
+        <td><%= option.name %></td>
+        <td><%= option.descriptions %></td>
+        <td><%= option.decision_id %></td>
+        <td>
+          <a href="/options/<%= option.id %>" class="btn btn-primary">Show</a>
+          <a href="/options/<%= option.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_option/<%= option.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

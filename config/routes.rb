@@ -1,4 +1,21 @@
 Rails.application.routes.draw do
+  # Routes for the Option resource:
+  # CREATE
+  get "/options/new", :controller => "options", :action => "new"
+  post "/create_option", :controller => "options", :action => "create"
+
+  # READ
+  get "/options", :controller => "options", :action => "index"
+  get "/options/:id", :controller => "options", :action => "show"
+
+  # UPDATE
+  get "/options/:id/edit", :controller => "options", :action => "edit"
+  post "/update_option/:id", :controller => "options", :action => "update"
+
+  # DELETE
+  get "/delete_option/:id", :controller => "options", :action => "destroy"
+  #------------------------------
+
   # Routes for the Comment resource:
   # CREATE
   get "/comments/new", :controller => "comments", :action => "new"
