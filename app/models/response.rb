@@ -1,6 +1,8 @@
 class Response < ApplicationRecord
   # Direct associations
 
+  belongs_to :option
+
   belongs_to :criteria
 
   belongs_to :user
