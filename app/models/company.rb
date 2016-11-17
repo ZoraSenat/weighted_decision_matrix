@@ -5,4 +5,6 @@ class Company < ApplicationRecord
 
   # Validations
 
+  validates :industry, :presence => true
+
 end
