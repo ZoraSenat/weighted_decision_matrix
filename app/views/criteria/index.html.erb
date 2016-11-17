@@ -19,7 +19,7 @@
       <% @criteria.each do |criterium| %>
       <tr>
         <td><%= criterium.weight %></td>
-        <td><%= criterium.decision_id %></td>
+        <td><%= criterium.decision.user_id %></td>
         <td><%= criterium.name %></td>
         <td><%= criterium.user_id %></td>
         <td>
