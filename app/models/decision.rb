@@ -5,6 +5,8 @@ class Decision < ApplicationRecord
 
   # Validations
 
+  validates :name, :uniqueness => { :scope => [:user_id] }
+
   validates :name, :presence => true
 
   validates :user_id, :presence => true
