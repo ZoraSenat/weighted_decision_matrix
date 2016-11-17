@@ -17,6 +17,10 @@ class Decision < ApplicationRecord
 
   # Indirect associations
 
+  has_many   :responses,
+             :through => :criteria,
+             :source => :responses
+
   # Validations
 
   validates :name, :uniqueness => { :scope => [:user_id] }

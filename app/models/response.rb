@@ -9,6 +9,10 @@ class Response < ApplicationRecord
 
   # Indirect associations
 
+  has_one    :decision,
+             :through => :criteria,
+             :source => :decision
+
   # Validations
 
   validates :user_id, :presence => true
