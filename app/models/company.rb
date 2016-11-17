@@ -5,6 +5,8 @@ class Company < ApplicationRecord
 
   # Validations
 
+  validates :company_name, :uniqueness => true
+
   validates :company_name, :presence => true
 
   validates :industry, :presence => true
