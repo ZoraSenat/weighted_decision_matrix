@@ -1,0 +1,31 @@
+<div class="page-header">
+  <h3>Decision #<%= @decision.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mb-2">
+    <dl class="dl-horizontal">
+      <dt>User</dt>
+      <dd><%= @decision.user_id %></dd>
+
+      <dt>Name</dt>
+      <dd><%= @decision.name %></dd>
+
+      <dt>Description</dt>
+      <dd><%= @decision.description %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/decisions" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/decisions/<%= @decision.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_decision/<%= @decision.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

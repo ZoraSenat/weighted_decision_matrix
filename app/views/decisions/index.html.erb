@@ -1,0 +1,32 @@
+<div class="page-header">
+  <h1>
+    Decisions
+    <a href="/decisions/new" class="btn btn-lg btn-success">New Decision</a>
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>User</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+
+      <% @decisions.each do |decision| %>
+      <tr>
+        <td><%= decision.user_id %></td>
+        <td><%= decision.name %></td>
+        <td><%= decision.description %></td>
+        <td>
+          <a href="/decisions/<%= decision.id %>" class="btn btn-primary">Show</a>
+          <a href="/decisions/<%= decision.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_decision/<%= decision.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
