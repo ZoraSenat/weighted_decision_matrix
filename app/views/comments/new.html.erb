@@ -37,13 +37,7 @@
       </div>
 
       <!-- Label and input for user_id -->
-      <div class="form-group">
-        <label for="user_id" class="control-label">
-          User
-        </label>
-
-        <%= select_tag(:user_id, options_from_collection_for_select(User.all, :id, :email, @comment.user_id), :class => "form-control") %>
-      </div>
+      <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
       <button class="btn btn-success">
         Create Comment
