@@ -1,0 +1,31 @@
+<div class="page-header">
+  <h3>Comment #<%= @comment.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mb-2">
+    <dl class="dl-horizontal">
+      <dt>Decision</dt>
+      <dd><%= @comment.decision_id %></dd>
+
+      <dt>Message</dt>
+      <dd><%= @comment.message %></dd>
+
+      <dt>User</dt>
+      <dd><%= @comment.user_id %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/comments" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/comments/<%= @comment.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_comment/<%= @comment.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>
