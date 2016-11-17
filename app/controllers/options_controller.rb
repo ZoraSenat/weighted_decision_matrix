@@ -6,6 +6,7 @@ class OptionsController < ApplicationController
   end
 
   def show
+    @response = Response.new
     @option = Option.find(params[:id])
 
     render("options/show.html.erb")

@@ -6,6 +6,9 @@ class DecisionsController < ApplicationController
   end
 
   def show
+    @option = Option.new
+    @comment = Comment.new
+    @criterium = Criterium.new
     @decision = Decision.find(params[:id])
 
     render("decisions/show.html.erb")

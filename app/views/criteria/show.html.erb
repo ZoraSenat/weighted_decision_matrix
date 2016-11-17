@@ -60,6 +60,47 @@
           </div>
         </li>
       <% end %>
+
+      <li class="list-group-item">
+        <form action="/create_response" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for user_id -->
+      <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+      <!-- Label and input for vote -->
+      <div class="form-group">
+        <label for="vote" class="control-label">
+          Vote
+        </label>
+
+        <input type="text" id="vote" name="vote" placeholder="Vote" class="form-control" value="">
+      </div>
+
+      <!-- Label and input for criteria_id -->
+      <div class="form-group">
+        <label for="criteria_id" class="control-label">
+          Criteria
+        </label>
+
+        <%= select_tag(:criteria_id, options_from_collection_for_select(Criterium.all, :id, :decision_id), :class => "form-control") %>
+      </div>
+
+      <!-- Label and input for option_id -->
+      <div class="form-group">
+        <label for="option_id" class="control-label">
+          Option
+        </label>
+
+        <%= select_tag(:option_id, options_from_collection_for_select(Option.all, :id, :name), :class => "form-control") %>
+      </div>
+
+      <button class="btn btn-block btn-success">
+        Create Response
+      </button>
+    </form>
+      </li>
     </ul>
   </div>
 </div>

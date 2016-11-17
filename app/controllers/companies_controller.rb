@@ -6,6 +6,7 @@ class CompaniesController < ApplicationController
   end
 
   def show
+    @user = User.new
     @company = Company.find(params[:id])
 
     render("companies/show.html.erb")

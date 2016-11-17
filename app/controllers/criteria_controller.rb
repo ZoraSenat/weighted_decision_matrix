@@ -6,6 +6,7 @@ class CriteriaController < ApplicationController
   end
 
   def show
+    @response = Response.new
     @criterium = Criterium.find(params[:id])
 
     render("criteria/show.html.erb")
