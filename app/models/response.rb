@@ -5,6 +5,8 @@ class Response < ApplicationRecord
 
   # Validations
 
+  validates :user_id, :presence => true
+
   validates :vote, :presence => true
 
 end
