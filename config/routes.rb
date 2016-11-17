@@ -1,4 +1,21 @@
 Rails.application.routes.draw do
+  # Routes for the Response resource:
+  # CREATE
+  get "/responses/new", :controller => "responses", :action => "new"
+  post "/create_response", :controller => "responses", :action => "create"
+
+  # READ
+  get "/responses", :controller => "responses", :action => "index"
+  get "/responses/:id", :controller => "responses", :action => "show"
+
+  # UPDATE
+  get "/responses/:id/edit", :controller => "responses", :action => "edit"
+  post "/update_response/:id", :controller => "responses", :action => "update"
+
+  # DELETE
+  get "/delete_response/:id", :controller => "responses", :action => "destroy"
+  #------------------------------
+
   # Routes for the Company resource:
   # CREATE
   get "/companies/new", :controller => "companies", :action => "new"

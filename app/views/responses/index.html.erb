@@ -1,0 +1,34 @@
+<div class="page-header">
+  <h1>
+    Responses
+    <a href="/responses/new" class="btn btn-lg btn-success">New Response</a>
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>User</th>
+        <th>Vote</th>
+        <th>Criteria</th>
+        <th>Option</th>
+        <th>Actions</th>
+      </tr>
+
+      <% @responses.each do |response| %>
+      <tr>
+        <td><%= response.user_id %></td>
+        <td><%= response.vote %></td>
+        <td><%= response.criteria_id %></td>
+        <td><%= response.option_id %></td>
+        <td>
+          <a href="/responses/<%= response.id %>" class="btn btn-primary">Show</a>
+          <a href="/responses/<%= response.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_response/<%= response.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

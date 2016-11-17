@@ -1,0 +1,34 @@
+<div class="page-header">
+  <h3>Response #<%= @response.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mb-2">
+    <dl class="dl-horizontal">
+      <dt>User</dt>
+      <dd><%= @response.user_id %></dd>
+
+      <dt>Vote</dt>
+      <dd><%= @response.vote %></dd>
+
+      <dt>Criteria</dt>
+      <dd><%= @response.criteria_id %></dd>
+
+      <dt>Option</dt>
+      <dd><%= @response.option_id %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/responses" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/responses/<%= @response.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_response/<%= @response.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<!-- Validation failure messages -->
+<% if @response.errors.any? %>
+  <% @response.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Add Response</h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/create_response" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for user_id -->
+      <div class="form-group">
+        <label for="user_id" class="control-label">
+          User
+        </label>
+
+        <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= @response.user_id %>">
+      </div>
+
+      <!-- Label and input for vote -->
+      <div class="form-group">
+        <label for="vote" class="control-label">
+          Vote
+        </label>
+
+        <input type="text" id="vote" name="vote" placeholder="Vote" class="form-control" value="<%= @response.vote %>">
+      </div>
+
+      <!-- Label and input for criteria_id -->
+      <div class="form-group">
+        <label for="criteria_id" class="control-label">
+          Criteria
+        </label>
+
+        <input type="text" id="criteria_id" name="criteria_id" placeholder="Criteria" class="form-control" value="<%= @response.criteria_id %>">
+      </div>
+
+      <!-- Label and input for option_id -->
+      <div class="form-group">
+        <label for="option_id" class="control-label">
+          Option
+        </label>
+
+        <input type="text" id="option_id" name="option_id" placeholder="Option" class="form-control" value="<%= @response.option_id %>">
+      </div>
+
+      <button class="btn btn-success">
+        Create Response
+      </button>
+      or
+      <a href="/responses">Cancel</a>
+    </form>
+  </div>
+</div>
