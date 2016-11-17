@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root :to => "decisions#index"
   # Routes for the Option resource:
   # CREATE
   get "/options/new", :controller => "options", :action => "new"
