@@ -1,0 +1,1 @@
+{"name":"Weighted Decision Matrix","repository":"https://github.com/ZoraSenat/weighted_decision_matrix","env":{"CLOUDINARY_CLOUD_NAME":{"required":true},"CLOUDINARY_API_KEY":{"required":true},"CLOUDINARY_API_SECRET":{"required":true},"ROLLBAR_ACCESS_TOKEN":{"required":true}}}
