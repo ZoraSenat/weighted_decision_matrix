@@ -6,13 +6,25 @@
   <div class="col-md-12 mb-2">
     <dl class="dl-horizontal">
       <dt>Decision</dt>
-      <dd><%= @comment.decision_id %></dd>
+      <dd>
+        <% if @comment.decision.present? %>
+          <a href="/decisions/<%= @comment.decision_id %>">
+            <%= @comment.decision.user_id %>
+          </a>
+        <% end %>
+      </dd>
 
       <dt>Message</dt>
       <dd><%= @comment.message %></dd>
 
       <dt>User</dt>
-      <dd><%= @comment.user_id %></dd>
+      <dd>
+        <% if @comment.user.present? %>
+          <a href="/users/<%= @comment.user_id %>">
+            <%= @comment.user.email %>
+          </a>
+        <% end %>
+      </dd>
 
     </dl>
 

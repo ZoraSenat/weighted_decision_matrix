@@ -12,7 +12,13 @@
       <dd><%= @option.descriptions %></dd>
 
       <dt>Decision</dt>
-      <dd><%= @option.decision_id %></dd>
+      <dd>
+        <% if @option.decision.present? %>
+          <a href="/decisions/<%= @option.decision_id %>">
+            <%= @option.decision.user_id %>
+          </a>
+        <% end %>
+      </dd>
 
     </dl>
 

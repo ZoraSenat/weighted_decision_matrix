@@ -17,7 +17,13 @@
 
       <% @decisions.each do |decision| %>
       <tr>
-        <td><%= decision.primary_stakeholder.email %></td>
+        <td>
+          <% if decision.primary_stakeholder.present? %>
+            <a href="/users/<%= decision.primary_stakeholder.id %>">
+              <%= decision.primary_stakeholder.email %>
+            </a>
+          <% end %>
+        </td>
         <td><%= decision.name %></td>
         <td><%= decision.description %></td>
         <td>

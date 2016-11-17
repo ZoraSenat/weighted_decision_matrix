@@ -24,7 +24,13 @@
         <td><%= user.email %></td>
         <td><%= user.password %></td>
         <td><%= user.job_title %></td>
-        <td><%= user.company.company_name %></td>
+        <td>
+          <% if user.company.present? %>
+            <a href="/companies/<%= user.company.id %>">
+              <%= user.company.company_name %>
+            </a>
+          <% end %>
+        </td>
         <td><%= user.phone %></td>
         <td><%= user.first_name %></td>
         <td><%= user.last_name %></td>

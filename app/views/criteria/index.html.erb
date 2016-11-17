@@ -19,7 +19,13 @@
       <% @criteria.each do |criterium| %>
       <tr>
         <td><%= criterium.weight %></td>
-        <td><%= criterium.decision.user_id %></td>
+        <td>
+          <% if criterium.decision.present? %>
+            <a href="/decisions/<%= criterium.decision.id %>">
+              <%= criterium.decision.user_id %>
+            </a>
+          <% end %>
+        </td>
         <td><%= criterium.name %></td>
         <td><%= criterium.user_id %></td>
         <td>

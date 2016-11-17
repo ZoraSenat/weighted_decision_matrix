@@ -9,7 +9,13 @@
       <dd><%= @criterium.weight %></dd>
 
       <dt>Decision</dt>
-      <dd><%= @criterium.decision_id %></dd>
+      <dd>
+        <% if @criterium.decision.present? %>
+          <a href="/decisions/<%= @criterium.decision_id %>">
+            <%= @criterium.decision.user_id %>
+          </a>
+        <% end %>
+      </dd>
 
       <dt>Name</dt>
       <dd><%= @criterium.name %></dd>

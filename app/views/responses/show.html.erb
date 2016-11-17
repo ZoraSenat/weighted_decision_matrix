@@ -6,16 +6,34 @@
   <div class="col-md-12 mb-2">
     <dl class="dl-horizontal">
       <dt>User</dt>
-      <dd><%= @response.user_id %></dd>
+      <dd>
+        <% if @response.user.present? %>
+          <a href="/users/<%= @response.user_id %>">
+            <%= @response.user.email %>
+          </a>
+        <% end %>
+      </dd>
 
       <dt>Vote</dt>
       <dd><%= @response.vote %></dd>
 
       <dt>Criteria</dt>
-      <dd><%= @response.criteria_id %></dd>
+      <dd>
+        <% if @response.criteria.present? %>
+          <a href="/criteria/<%= @response.criteria_id %>">
+            <%= @response.criteria.decision_id %>
+          </a>
+        <% end %>
+      </dd>
 
       <dt>Option</dt>
-      <dd><%= @response.option_id %></dd>
+      <dd>
+        <% if @response.option.present? %>
+          <a href="/options/<%= @response.option_id %>">
+            <%= @response.option.name %>
+          </a>
+        <% end %>
+      </dd>
 
     </dl>
 

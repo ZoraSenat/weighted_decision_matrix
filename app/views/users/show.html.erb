@@ -15,7 +15,13 @@
       <dd><%= @user.job_title %></dd>
 
       <dt>Company</dt>
-      <dd><%= @user.company_id %></dd>
+      <dd>
+        <% if @user.company.present? %>
+          <a href="/companies/<%= @user.company_id %>">
+            <%= @user.company.company_name %>
+          </a>
+        <% end %>
+      </dd>
 
       <dt>Phone</dt>
       <dd><%= @user.phone %></dd>

@@ -18,10 +18,28 @@
 
       <% @responses.each do |response| %>
       <tr>
-        <td><%= response.user.email %></td>
+        <td>
+          <% if response.user.present? %>
+            <a href="/users/<%= response.user.id %>">
+              <%= response.user.email %>
+            </a>
+          <% end %>
+        </td>
         <td><%= response.vote %></td>
-        <td><%= response.criteria.decision_id %></td>
-        <td><%= response.option.name %></td>
+        <td>
+          <% if response.criteria.present? %>
+            <a href="/criteria/<%= response.criteria.id %>">
+              <%= response.criteria.decision_id %>
+            </a>
+          <% end %>
+        </td>
+        <td>
+          <% if response.option.present? %>
+            <a href="/options/<%= response.option.id %>">
+              <%= response.option.name %>
+            </a>
+          <% end %>
+        </td>
         <td>
           <a href="/responses/<%= response.id %>" class="btn btn-primary">Show</a>
           

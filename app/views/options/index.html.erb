@@ -19,7 +19,13 @@
       <tr>
         <td><%= option.name %></td>
         <td><%= option.descriptions %></td>
-        <td><%= option.decision.user_id %></td>
+        <td>
+          <% if option.decision.present? %>
+            <a href="/decisions/<%= option.decision.id %>">
+              <%= option.decision.user_id %>
+            </a>
+          <% end %>
+        </td>
         <td>
           <a href="/options/<%= option.id %>" class="btn btn-primary">Show</a>
           <a href="/options/<%= option.id %>/edit" class="btn btn-warning">Edit</a>
