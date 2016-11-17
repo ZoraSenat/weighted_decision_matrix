@@ -1,6 +1,6 @@
 class CriteriaController < ApplicationController
   def index
-    @criteria = Criterium.all
+    @criteria = Criterium.page(params[:page]).per(10)
 
     render("criteria/index.html.erb")
   end

@@ -1,6 +1,6 @@
 class OptionsController < ApplicationController
   def index
-    @options = Option.all
+    @options = Option.page(params[:page]).per(10)
 
     render("options/index.html.erb")
   end
