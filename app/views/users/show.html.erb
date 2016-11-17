@@ -1,0 +1,37 @@
+<div class="page-header">
+  <h3>User #<%= @user.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mb-2">
+    <dl class="dl-horizontal">
+      <dt>Email</dt>
+      <dd><%= @user.email %></dd>
+
+      <dt>Password</dt>
+      <dd><%= @user.password %></dd>
+
+      <dt>Job title</dt>
+      <dd><%= @user.job_title %></dd>
+
+      <dt>Company</dt>
+      <dd><%= @user.company_id %></dd>
+
+      <dt>Phone</dt>
+      <dd><%= @user.phone %></dd>
+
+      <dt>First name</dt>
+      <dd><%= @user.first_name %></dd>
+
+      <dt>Last name</dt>
+      <dd><%= @user.last_name %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/users" class="btn btn-primary">
+        Back
+      </a>
+    </div>
+  </div>
+</div>
