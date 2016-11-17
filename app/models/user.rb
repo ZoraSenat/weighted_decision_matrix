@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   # Direct associations
 
+  has_many   :responses,
+             :dependent => :nullify
+
   has_many   :decisions
 
   # Indirect associations
