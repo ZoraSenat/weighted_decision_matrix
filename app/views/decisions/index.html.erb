@@ -17,7 +17,7 @@
 
       <% @decisions.each do |decision| %>
       <tr>
-        <td><%= decision.user_id %></td>
+        <td><%= decision.primary_stakeholder.email %></td>
         <td><%= decision.name %></td>
         <td><%= decision.description %></td>
         <td>
