@@ -36,7 +36,7 @@
           Criteria
         </label>
 
-        <%= select_tag(:criteria_id, options_from_collection_for_select(Criterium.all, :id, :decision_id, @response.criteria_id), :class => "form-control") %>
+        <%= select_tag(:criteria_id, options_from_collection_for_select(Criterium.all, :id, :name, @response.criteria_id), :class => "form-control") %>
       </div>
 
       <!-- Label and input for option_id -->

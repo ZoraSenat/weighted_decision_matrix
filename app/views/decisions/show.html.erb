@@ -1,229 +1,177 @@
 <div class="page-header">
-  <h3>Decision #<%= @decision.id %></h3>
-</div>
-
-<div class="row">
-  <div class="col-md-12 mb-2">
-    <dl class="dl-horizontal">
-      <dt>User</dt>
-      <dd>
-        <% if @decision.primary_stakeholder.present? %>
-          <a href="/users/<%= @decision.user_id %>">
-            <%= @decision.primary_stakeholder.email %>
-          </a>
-        <% end %>
-      </dd>
-
-      <dt>Name</dt>
-      <dd><%= @decision.name %></dd>
-
-      <dt>Description</dt>
-      <dd><%= @decision.description %></dd>
-
-    </dl>
-
-    <div class="btn-group btn-group-justified">
-      <a href="/decisions" class="btn btn-primary">
-        Back
-      </a>
-      <a href="/decisions/<%= @decision.id %>/edit" class="btn btn-warning">
-        Edit
-      </a>
-      <a href="/delete_decision/<%= @decision.id %>" class="btn btn-danger" rel="nofollow">
-        Delete
-      </a>
+  <h2><%= @decision.name %></h2>
+  <h4><em><%= @decision.description %></em></h4>
+  <span class="text-muted"> Posted by
+    <% if @decision.primary_stakeholder.present? %>
+    <a href="/users/<%= @decision.user_id %>">
+      <%= @decision.primary_stakeholder.first_name %></a> <%= time_ago_in_words(@decision.created_at)%> ago<% end %></span>
     </div>
-  </div>
-</div>
 
-<!-- A Decision has many criteria -->
+    <div class="row">
+      <div class="col-md-12 mb-2">
 
-<div class="row">
-  <div class="col-md-12">
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-info">
-        Criteria
-      </li>
 
-      <% @decision.criteria.each do |criterium| %>
-        <li class="list-group-item">
-          <a href="/criteria/<%= criterium.id %>">
-            <%= criterium.decision_id %>
+        <% @decision.options.each do |option| %>
+        <li><%= option.name %></li>
+
+        <% @decision.criteria.each do |criteria| %>
+        <ul><%= criteria.name %></ul>
+
+        <% option.responses.each do |response| %>
+          <% if response.option_id == option.id && response.criteria_id == criteria.id %>
+          <ul><%= response.vote %></ul>
+          <%else %>
+          <%end%>
+
+        <%end%>
+        <%end%>
+        <%end%>
+
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tr>
+              <th>Criteria</th>
+              <% @decision.options.each do |o| %>
+              <th>
+                <%= o.name %>
+                <%end%>
+              </th>
+            </tr>
+            <tbody>
+              <% @decision.criteria.each do |c| %>
+              <tr>
+                <th scope="row"><%= c.name %><%end%></th>
+              </tr>
+              <tr>
+              <% @decision.options.each do |o| %>
+              <% @decision.criteria.each do |c| %>
+              <% o.responses.each do |r| %>
+                <td>
+                  <% if r.option_id == o.id && r.criteria_id == c.id %>
+                  <%= r.vote %>
+                  <%else %>
+                  </td>
+                  <%end%>
+                  <%end%>
+                  <%end%>
+                  <%end%>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+
+
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Criteria</th>
+              <% @decision.options.each do |option| %>
+              <th class="text-center">
+                <%= option.name %>
+              </th>
+              <%end%>
+            </tr>
+          </thead>
+          <tbody>
+            <% @decision.criteria.each do |criterium| %>
+            <tr>
+              <th scope="row">
+                <%= criterium.name %> (<%= criterium.weight %>)
+              </th>
+              <% criterium.responses.each do |response| %>
+              <td> <%= response.vote %> </td>
+              <%end%>
+              <%end%>
+            </tr>
+          </tbody>
+
+        </table>
+
+        <p></p>
+        <div class="btn-group btn-group-justified">
+          <a href="/decisions" class="btn btn-primary">
+            Back
           </a>
-          <div class="btn-group btn-group-xs pull-right">
-            <a href="/criteria/<%= criterium.id %>" class="btn btn-primary">
-              <i class="fa fa-search-plus"></i>
-            </a>
-            <a href="/criteria/<%= criterium.id %>/edit" class="btn btn-warning">
-              <i class="fa fa-edit"></i>
-            </a>
-            <a href="/delete_criterium/<%= criterium.id %>" class="btn btn-danger" rel="nofollow">
-              <i class="fa fa-trash-o"></i>
-            </a>
-          </div>
-        </li>
-      <% end %>
-
-      <li class="list-group-item">
-        <form action="/create_criterium" method="post">
-      <!-- Hidden input for authenticity token to protect from forgery -->
-      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-
-      <!-- Label and input for weight -->
-      <div class="form-group">
-        <label for="weight" class="control-label">
-          Weight
-        </label>
-
-        <input type="text" id="weight" name="weight" placeholder="Weight" class="form-control" value="">
-      </div>
-
-      <!-- Label and input for decision_id -->
-      <input type="hidden" name="decision_id" value="<%= @decision.id %>">
-
-      <!-- Label and input for name -->
-      <div class="form-group">
-        <label for="name" class="control-label">
-          Name
-        </label>
-
-        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="">
-      </div>
-
-      <!-- Label and input for user_id -->
-      <div class="form-group">
-        <label for="user_id" class="control-label">
-          User
-        </label>
-
-        <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="">
-      </div>
-
-      <button class="btn btn-block btn-success">
-        Create Criterium
-      </button>
-    </form>
-      </li>
-    </ul>
-  </div>
-</div>
-
-<!-- A Decision has many comments -->
-
-<div class="row">
-  <div class="col-md-12">
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-info">
-        Comments
-      </li>
-
-      <% @decision.comments.each do |comment| %>
-        <li class="list-group-item">
-          <a href="/comments/<%= comment.id %>">
-            <%= comment.decision_id %>
+          <a href="/decisions/<%= @decision.id %>/edit" class="btn btn-warning">
+            Edit
           </a>
-          <div class="btn-group btn-group-xs pull-right">
-            <a href="/comments/<%= comment.id %>" class="btn btn-primary">
-              <i class="fa fa-search-plus"></i>
-            </a>
-            <a href="/comments/<%= comment.id %>/edit" class="btn btn-warning">
-              <i class="fa fa-edit"></i>
-            </a>
-            <a href="/delete_comment/<%= comment.id %>" class="btn btn-danger" rel="nofollow">
-              <i class="fa fa-trash-o"></i>
-            </a>
-          </div>
-        </li>
-      <% end %>
-
-      <li class="list-group-item">
-        <form action="/create_comment" method="post">
-      <!-- Hidden input for authenticity token to protect from forgery -->
-      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-
-      <!-- Label and input for decision_id -->
-      <input type="hidden" name="decision_id" value="<%= @decision.id %>">
-
-      <!-- Label and input for message -->
-      <div class="form-group">
-        <label for="message" class="control-label">
-          Message
-        </label>
-
-        <textarea id="message" name="message" placeholder="Message" class="form-control" rows="3"></textarea>
-      </div>
-
-      <!-- Label and input for user_id -->
-      <input type="hidden" name="user_id" value="<%= current_user.id %>">
-
-      <button class="btn btn-block btn-success">
-        Create Comment
-      </button>
-    </form>
-      </li>
-    </ul>
-  </div>
-</div>
-
-<!-- A Decision has many options -->
-
-<div class="row">
-  <div class="col-md-12">
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-info">
-        Options
-      </li>
-
-      <% @decision.options.each do |option| %>
-        <li class="list-group-item">
-          <a href="/options/<%= option.id %>">
-            <%= option.name %>
+          <a href="/delete_decision/<%= @decision.id %>" class="btn btn-danger" rel="nofollow">
+            Delete
           </a>
-          <div class="btn-group btn-group-xs pull-right">
-            <a href="/options/<%= option.id %>" class="btn btn-primary">
-              <i class="fa fa-search-plus"></i>
-            </a>
-            <a href="/options/<%= option.id %>/edit" class="btn btn-warning">
-              <i class="fa fa-edit"></i>
-            </a>
-            <a href="/delete_option/<%= option.id %>" class="btn btn-danger" rel="nofollow">
-              <i class="fa fa-trash-o"></i>
-            </a>
-          </div>
-        </li>
-      <% end %>
-
-      <li class="list-group-item">
-        <form action="/create_option" method="post">
-      <!-- Hidden input for authenticity token to protect from forgery -->
-      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-
-      <!-- Label and input for name -->
-      <div class="form-group">
-        <label for="name" class="control-label">
-          Name
-        </label>
-
-        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="">
+        </div>
       </div>
+    </div>
 
-      <!-- Label and input for descriptions -->
-      <div class="form-group">
-        <label for="descriptions" class="control-label">
-          Descriptions
-        </label>
+    <!-- A Decision has many comments -->
 
-        <textarea id="descriptions" name="descriptions" placeholder="Descriptions" class="form-control" rows="3"></textarea>
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <ul class="list-group">
+          <li class="list-group-item list-group-item-info">
+            Comments
+          </li>
+
+          <% @decision.comments.each do |comment| %>
+          <li class="list-group-item">
+            <%= comment.message %>
+            <p class="italics">
+              <%= comment.user.first_name %>
+            </p>
+            <div class="btn-group btn-group-xs pull-right">
+              <a href="/comments/<%= comment.id %>" class="btn btn-primary">
+                <i class="fa fa-search-plus"></i>
+              </a>
+              <a href="/comments/<%= comment.id %>/edit" class="btn btn-warning">
+                <i class="fa fa-edit"></i>
+              </a>
+              <a href="/delete_comment/<%= comment.id %>" class="btn btn-danger" rel="nofollow">
+                <i class="fa fa-trash-o"></i>
+              </a>
+            </div>
+          </li>
+          <% end %>
+
+          <li class="list-group-item">
+            <form action="/create_comment" method="post">
+              <!-- Hidden input for authenticity token to protect from forgery -->
+              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+              <!-- Label and input for decision_id -->
+              <input type="hidden" name="decision_id" value="<%= @decision.id %>">
+
+              <!-- Label and input for message -->
+              <div class="form-group">
+
+                <textarea id="message" name="message" placeholder="Message" class="form-control" rows="3"></textarea>
+              </div>
+
+              <!-- Label and input for user_id -->
+              <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+              <button class="btn btn-block btn-success">
+                Create Comment
+              </button>
+            </form>
+          </li>
+        </ul>
       </div>
+    </div>
 
-      <!-- Label and input for decision_id -->
-      <input type="hidden" name="decision_id" value="<%= @decision.id %>">
-
-      <button class="btn btn-block btn-success">
-        Create Option
-      </button>
-    </form>
-      </li>
-    </ul>
   </div>
-</div>
+
+
+            <% @decision.options.each do |o| %>
+            <li><%= o.name %></li>
+
+            <% @decision.criteria.each do |c| %>
+            <li><%= c.name %></li>
+
+            <% o.responses.each do |r| %>
+              <% if r.option_id == o.id && r.criteria_id == c.id %>
+              <li><%= r.vote %></li>
+              <%else %>
+              <%end%>
+
+            <%end%>
+            <%end%>
+            <%end%>

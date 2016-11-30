@@ -1,11 +1,11 @@
 <!-- Validation failure messages -->
 <% if @decision.errors.any? %>
-  <% @decision.errors.full_messages.each do |message| %>
-    <div class="alert alert-dismissable alert-danger">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <%= message %>
-    </div>
-  <% end %>
+<% @decision.errors.full_messages.each do |message| %>
+<div class="alert alert-dismissable alert-danger">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <%= message %>
+</div>
+<% end %>
 <% end %>
 
 <div class="page-header">
@@ -17,9 +17,6 @@
     <form action="/update_decision/<%= @decision.id %>" method="post">
       <!-- Hidden input for authenticity token to protect from forgery -->
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-
-      
-      
 
       <!-- Label and input for name -->
       <div class="form-group">
@@ -39,11 +36,81 @@
         <textarea id="description" name="description" placeholder="Description" class="form-control" rows="3"><%= @decision.description %></textarea>
       </div>
 
+      <!-- Input for user id -->
+
+      <input type="hidden" id="user_id" name="user_id" placeholder="User ID" class="form-control" value="<%= @decision.user_id %>">
+
       <button class="btn btn-warning">
         Update Decision
       </button>
       or
       <a href="/decisions/<%= @decision.id %>">Cancel</a>
     </form>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <h3>Add Options</h3>
+    <em>Enter the options you are choosing between.</em>
+    <p></p>
+    <% @decision.options.each do |option| %>
+    <ul>
+      <li class="list-unstyled"><%= option.name %>           <a href="/delete_option/<%= option.id %>" rel="nofollow">
+        <small><i class="fa fa-ban" aria-hidden="true"></i></small>
+      </a></li>
+    </ul>
+    <% end %>
+    <li class="list-unstyled">
+
+      <form action="/create_option" method="post">
+        <!-- Hidden input for authenticity token to protect from forgery -->
+        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+        <input type="text" id="name" name="name" placeholder="Add an option..." class="form-control" value="">
+
+        <input type="hidden" id="user_id" name="user_id" class="form-control" value="<%= current_user.id %>">
+
+        <input type="hidden" name="decision_id" value="<%= @decision.id %>">
+
+      </form>
+    </li>
+    <p>
+    </p>
+
+    <h3>Add Criteria</h3>
+    <em>Select your level of importance and enter each criteria you wish to evaluate.</em>
+    <p></p>
+
+    <% @decision.criteria.each do |criteria| %>
+    <ul>
+      <li class="list-unstyled">
+        <%= criteria.name %> (<%= criteria.weight %>)
+        <a href="/delete_criterium/<%= criteria.id %>" rel="nofollow">
+          <small><i class="fa fa-ban" aria-hidden="true"></i></small>
+        </a>
+      </li>
+    </ul>
+    <% end %>
+    <li class="list-unstyled">
+      <form action="/create_criterium" method="post">
+        <!-- Hidden input for authenticity token to protect from forgery -->
+        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+        <select id="weight" name="weight" class="form-control" value="">
+          <option value="1">1 (least important)</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5 (most important)</option>
+        </select>
+
+        <input type="text" id="name" name="name" placeholder="Add criteria..." class="form-control" value="">
+
+        <input type="hidden" id="user_id" name="user_id" class="form-control" value="<%= current_user.id %>">
+
+        <input type="hidden" name="decision_id" value="<%= @decision.id %>">
+      </form>
+    </li>
   </div>
 </div>
