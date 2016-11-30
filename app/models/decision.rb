@@ -4,10 +4,10 @@ class Decision < ApplicationRecord
   has_many   :options,
              :dependent => :destroy
 
-  has_many   :comments,
+  has_many   :criterium, :foreign_key => "decision_id",
              :dependent => :destroy
 
-  has_many   :criteria,
+  has_many   :comments,
              :dependent => :destroy
 
   belongs_to :primary_stakeholder,
@@ -18,7 +18,7 @@ class Decision < ApplicationRecord
   # Indirect associations
 
   has_many   :responses,
-             :through => :criteria,
+             :through => :criterium, :foreign_key => "criteria_id",
              :source => :responses
 
   # Validations

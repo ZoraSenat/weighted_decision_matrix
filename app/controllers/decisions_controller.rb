@@ -1,7 +1,7 @@
 class DecisionsController < ApplicationController
   def index
     @q = current_user.decisions.ransack(params[:q])
-      @decisions = @q.result(:distinct => true).includes(:primary_stakeholder, :criteria, :comments, :options, :responses).page(params[:page]).per(10)
+      @decisions = @q.result(:distinct => true).includes(:primary_stakeholder, :criterium, :comments, :options, :responses).page(params[:page]).per(10)
 
     render("decisions/index.html.erb")
   end
@@ -10,6 +10,7 @@ class DecisionsController < ApplicationController
     @option = Option.new
     @comment = Comment.new
     @criterium = Criterium.new
+    @response = Response.all
     @decision = Decision.find(params[:id])
 
     render("decisions/show.html.erb")

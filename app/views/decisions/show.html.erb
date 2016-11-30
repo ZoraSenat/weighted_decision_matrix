@@ -10,61 +10,12 @@
     <div class="row">
       <div class="col-md-12 mb-2">
 
-
-        <% @decision.options.each do |option| %>
-        <li><%= option.name %></li>
-
-        <% @decision.criteria.each do |criteria| %>
-        <ul><%= criteria.name %></ul>
-
-        <% option.responses.each do |response| %>
-          <% if response.option_id == option.id && response.criteria_id == criteria.id %>
-          <ul><%= response.vote %></ul>
-          <%else %>
-          <%end%>
-
-        <%end%>
-        <%end%>
-        <%end%>
-
-        <div class="table-responsive">
-          <table class="table table-bordered">
-            <tr>
-              <th>Criteria</th>
-              <% @decision.options.each do |o| %>
-              <th>
-                <%= o.name %>
-                <%end%>
-              </th>
-            </tr>
-            <tbody>
-              <% @decision.criteria.each do |c| %>
-              <tr>
-                <th scope="row"><%= c.name %><%end%></th>
-              </tr>
-              <tr>
-              <% @decision.options.each do |o| %>
-              <% @decision.criteria.each do |c| %>
-              <% o.responses.each do |r| %>
-                <td>
-                  <% if r.option_id == o.id && r.criteria_id == c.id %>
-                  <%= r.vote %>
-                  <%else %>
-                  </td>
-                  <%end%>
-                  <%end%>
-                  <%end%>
-                  <%end%>
-                </tr>
-            </tbody>
-          </table>
-        </div>
-
-
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th>Criteria</th>
+              <th>
+                Criteria
+              </th>
               <% @decision.options.each do |option| %>
               <th class="text-center">
                 <%= option.name %>
@@ -73,18 +24,25 @@
             </tr>
           </thead>
           <tbody>
-            <% @decision.criteria.each do |criterium| %>
+            <% @decision.criterium.each do |criterium| %>
             <tr>
-              <th scope="row">
-                <%= criterium.name %> (<%= criterium.weight %>)
-              </th>
-              <% criterium.responses.each do |response| %>
-              <td> <%= response.vote %> </td>
-              <%end%>
+              <th scope="row"><%= criterium.name %> (<%= criterium.weight %>)</th>
+              <% @decision.options.each do |option| %>
+              <td class="text-center">
+                <%= @response.where(:criteria_id => criterium.id, :option_id => option.id).pluck(:vote).sum * criterium.weight %>
+              </td>
+              <% end %>
+            </tr>
+            <% end %>
+            <tr>
+              <th>TOTAL SCORE</th>
+              <% @decision.options.each do |option| %>
+              <td class="text-center"><strong>
+                <%= @response.where(:option_id => option.id, :option_id => option.id).pluck(:vote).sum   %></strong>
+              </td>
               <%end%>
             </tr>
           </tbody>
-
         </table>
 
         <p></p>
@@ -156,22 +114,4 @@
         </ul>
       </div>
     </div>
-
   </div>
-
-
-            <% @decision.options.each do |o| %>
-            <li><%= o.name %></li>
-
-            <% @decision.criteria.each do |c| %>
-            <li><%= c.name %></li>
-
-            <% o.responses.each do |r| %>
-              <% if r.option_id == o.id && r.criteria_id == c.id %>
-              <li><%= r.vote %></li>
-              <%else %>
-              <%end%>
-
-            <%end%>
-            <%end%>
-            <%end%>

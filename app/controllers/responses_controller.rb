@@ -11,7 +11,7 @@ class ResponsesController < ApplicationController
 
   def index
     @q = Response.ransack(params[:q])
-    @responses = @q.result(:distinct => true).includes(:user, :criteria, :option, :decision).page(params[:page]).per(10)
+    @responses = @q.result(:distinct => true).includes(:user, :criterium, :option, :decision).page(params[:page]).per(10)
 
     render("responses/index.html.erb")
   end

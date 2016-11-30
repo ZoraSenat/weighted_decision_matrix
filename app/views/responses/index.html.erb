@@ -102,9 +102,9 @@
         </td>
         <td><%= response.vote %></td>
         <td>
-          <% if response.criteria.present? %>
-            <a href="/criteria/<%= response.criteria.id %>">
-              <%= response.criteria.decision_id %>
+          <% if response.criterium.present? %>
+            <a href="/criteria/<%= response.criterium.id %>">
+              <%= response.criterium.decision_id %>
             </a>
           <% end %>
         </td>
@@ -117,7 +117,7 @@
         </td>
         <td>
           <a href="/responses/<%= response.id %>" class="btn btn-primary">Show</a>
-          
+
           <% if current_user == response.user %>
             <a href="/responses/<%= response.id %>/edit" class="btn btn-warning">Edit</a>
             <a href="/delete_response/<%= response.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
