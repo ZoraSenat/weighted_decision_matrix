@@ -24,13 +24,16 @@ class ResponsesController < ApplicationController
 
   def new
     @response = Response.new
+    @option = Option.new
+    @criterium = Criterium.new
+    @decision = Decision.find(params[:id])
 
     render("responses/new.html.erb")
   end
 
   def create
+    @decision = Decision.new
     @response = Response.new
-
     @response.user_id = params[:user_id]
     @response.vote = params[:vote]
     @response.criteria_id = params[:criteria_id]
@@ -60,7 +63,6 @@ class ResponsesController < ApplicationController
 
   def update
     @response = Response.find(params[:id])
-
     @response.user_id = params[:user_id]
     @response.vote = params[:vote]
     @response.criteria_id = params[:criteria_id]

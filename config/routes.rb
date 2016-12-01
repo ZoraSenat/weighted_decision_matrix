@@ -55,7 +55,7 @@ Rails.application.routes.draw do
 
   # Routes for the Response resource:
   # CREATE
-  get "/responses/new", :controller => "responses", :action => "new"
+  get "/decisions/:id/responses/new", :controller => "responses", :action => "new"
   post "/create_response", :controller => "responses", :action => "create"
 
   # READ

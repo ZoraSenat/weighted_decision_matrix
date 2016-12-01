@@ -12,47 +12,59 @@
   <h3>Add Response</h3>
 </div>
 
-<div class="row">
-  <div class="col-md-12">
-    <form action="/create_response" method="post">
-      <!-- Hidden input for authenticity token to protect from forgery -->
-      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
-      <!-- Label and input for user_id -->
-      <input type="hidden" name="user_id" value="<%= current_user.id %>">
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>
+        Criteria
+      </th>
+      <% @decision.options.each do |option| %>
+      <th class="text-center">
+        <%= option.name %>
+      </th>
+      <%end%>
+    </tr>
+  </thead>
+  <tbody>
+    <% @decision.criterium.each do |criterium| %>
+    <tr>
+      <th scope="row"><%= criterium.name %> (<%= criterium.weight %>)</th>
+      <% @decision.options.each do |option| %>
 
-      <!-- Label and input for vote -->
-      <div class="form-group">
-        <label for="vote" class="control-label">
-          Vote
-        </label>
+      <form action="/create_response" method="post">
+      <td class="text-center">
+              <!-- Label and input for vote -->
+              <select id="vote" name="vote" class="form-control">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+              <!-- Hidden input for authenticity token to protect from forgery -->
+              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
-        <input type="text" id="vote" name="vote" placeholder="Vote" class="form-control" value="<%= @response.vote %>">
-      </div>
+              <!-- Label and input for user_id -->
+              <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
-      <!-- Label and input for criteria_id -->
-      <div class="form-group">
-        <label for="criteria_id" class="control-label">
-          Criteria
-        </label>
+              <!-- Label and input for criteria_id -->
+              <input type="hidden" name="criteria_id" value="<%= criterium.id %>">
+              <!-- Label and input for option_id -->
+              <input type="hidden" name="option_id" value="<%= option.id %>">
 
-        <%= select_tag(:criteria_id, options_from_collection_for_select(Criterium.all, :id, :name, @response.criteria_id), :class => "form-control") %>
-      </div>
+              <button class="btn btn-success">
+                Submit
+              </button>
+            </form>
+              </td>
+      <% end %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
 
-      <!-- Label and input for option_id -->
-      <div class="form-group">
-        <label for="option_id" class="control-label">
-          Option
-        </label>
 
-        <%= select_tag(:option_id, options_from_collection_for_select(Option.all, :id, :name, @response.option_id), :class => "form-control") %>
-      </div>
 
-      <button class="btn btn-success">
-        Create Response
-      </button>
-      or
-      <a href="/responses">Cancel</a>
-    </form>
-  </div>
+
 </div>

@@ -7,9 +7,12 @@
       <%= @decision.primary_stakeholder.first_name %></a> <%= time_ago_in_words(@decision.created_at)%> ago<% end %></span>
     </div>
 
+<a href="/decisions/<%= @decision.id %>/responses/new">Vote on this decision</a>
+
+<p></p>
+
     <div class="row">
       <div class="col-md-12 mb-2">
-
         <table class="table table-bordered">
           <thead>
             <tr>
@@ -34,13 +37,15 @@
               <% end %>
             </tr>
             <% end %>
+
             <tr>
               <th>TOTAL SCORE</th>
-              <% @decision.options.each do |option| %>
-              <td class="text-center"><strong>
-                <%= @response.where(:option_id => option.id, :option_id => option.id).pluck(:vote).sum   %></strong>
+              <td class="text-center">
+                <strong>
+
+              </strong>
               </td>
-              <%end%>
+
             </tr>
           </tbody>
         </table>
