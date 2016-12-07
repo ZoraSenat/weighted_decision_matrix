@@ -1,11 +1,11 @@
 <!-- Validation failure messages -->
 <% if @response.errors.any? %>
-  <% @response.errors.full_messages.each do |message| %>
-    <div class="alert alert-dismissable alert-danger">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-      <%= message %>
-    </div>
-  <% end %>
+<% @response.errors.full_messages.each do |message| %>
+<div class="alert alert-dismissable alert-danger">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <%= message %>
+</div>
+<% end %>
 <% end %>
 
 <div class="page-header">
@@ -33,38 +33,47 @@
       <% @decision.options.each do |option| %>
 
       <form action="/create_response" method="post">
-      <td class="text-center">
-              <!-- Label and input for vote -->
-              <select id="vote" name="vote" class="form-control">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-              <!-- Hidden input for authenticity token to protect from forgery -->
-              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+        <td class="text-center">
+          <div class="form-group">
+            <!-- Label and input for vote -->
 
-              <!-- Label and input for user_id -->
-              <input type="hidden" name="user_id" value="<%= current_user.id %>">
 
-              <!-- Label and input for criteria_id -->
-              <input type="hidden" name="criteria_id" value="<%= criterium.id %>">
-              <!-- Label and input for option_id -->
-              <input type="hidden" name="option_id" value="<%= option.id %>">
+            <select id="vote" name="vote" class="form-control">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
 
-              <button class="btn btn-success">
-                Submit
-              </button>
-            </form>
-              </td>
+
+          </div>
+          <!-- Hidden input for authenticity token to protect from forgery -->
+          <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+          <!-- Label and input for user_id -->
+          <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+          <!-- Label and input for criteria_id -->
+          <input type="hidden" name="criteria_id" value="<%= criterium.id %>">
+          <!-- Label and input for option_id -->
+          <input type="hidden" name="option_id" class="form-control" value="<%= option.id %>">
+
+          <button class="btn btn-success">
+            Submit
+          </button>
+        </form>
+      </td>
       <% end %>
     </tr>
     <% end %>
   </tbody>
 </table>
 
-
+<a href="/decisions/<%= @decision.id %>">
+  <button class="btn btn-warning">
+  Back to Decision
+</button></a>
 
 
 </div>

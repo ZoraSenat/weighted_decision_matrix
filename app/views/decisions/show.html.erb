@@ -7,9 +7,9 @@
       <%= @decision.primary_stakeholder.first_name %></a> <%= time_ago_in_words(@decision.created_at)%> ago<% end %></span>
     </div>
 
-<a href="/decisions/<%= @decision.id %>/responses/new">Vote on this decision</a>
+    <a href="/decisions/<%= @decision.id %>/responses/new">Vote on this decision</a>
 
-<p></p>
+    <p></p>
 
     <div class="row">
       <div class="col-md-12 mb-2">
@@ -40,18 +40,12 @@
 
             <tr>
               <th>TOTAL SCORE</th>
-
-                  <% @decision.options.each do |option| %>
-                  <td class="text-center">
-                    <strong>
-                    <% @decision.criterium.each do |criterium| %>
-                    <% a = @response.where(:criteria_id => criterium.id, :option_id => option.id).pluck(:vote) * criterium.weight %>
-                    <%= a.sum %>
-                  <% end %>
-                  <% end %>
+              <td class="text-center">
+                <strong>
+                  
                 </strong>
 
-                </td>
+              </td>
 
             </tr>
           </tbody>

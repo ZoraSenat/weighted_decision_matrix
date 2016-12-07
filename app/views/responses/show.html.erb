@@ -19,9 +19,9 @@
 
       <dt>Criteria</dt>
       <dd>
-        <% if @response.criteria.present? %>
-          <a href="/criteria/<%= @response.criteria_id %>">
-            <%= @response.criteria.decision_id %>
+        <% if @response.criterium.present? %>
+          <a href="/criteria/<%= @response.criterium_id %>">
+            <%= @response.criterium.decision_id %>
           </a>
         <% end %>
       </dd>

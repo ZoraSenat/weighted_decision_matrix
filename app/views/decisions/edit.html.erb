@@ -9,43 +9,12 @@
 <% end %>
 
 <div class="page-header">
-  <h3>Edit Decision #<%= @decision.id %></h3>
-</div>
-
-<div class="row">
-  <div class="col-md-10 col-md-offset-1">
-    <form action="/update_decision/<%= @decision.id %>" method="post">
-      <!-- Hidden input for authenticity token to protect from forgery -->
-      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-
-      <!-- Label and input for name -->
-      <div class="form-group">
-        <label for="name" class="control-label">
-          Name
-        </label>
-
-        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @decision.name %>">
-      </div>
-
-      <!-- Label and input for description -->
-      <div class="form-group">
-        <label for="description" class="control-label">
-          Description
-        </label>
-
-        <textarea id="description" name="description" placeholder="Description" class="form-control" rows="3"><%= @decision.description %></textarea>
-      </div>
-
-      <!-- Input for user id -->
-
-      <input type="hidden" id="user_id" name="user_id" placeholder="User ID" class="form-control" value="<%= @decision.user_id %>">
-
-      <button class="btn btn-warning">
-        Update Decision
-      </button>
-      or
-      <a href="/decisions/<%= @decision.id %>">Back</a>
-    </form>
+<h2><%= @decision.name %></h2>
+<h4><em><%= @decision.description %></em></h4>
+<span class="text-muted"> Posted by
+  <% if @decision.primary_stakeholder.present? %>
+  <a href="/users/<%= @decision.user_id %>">
+    <%= @decision.primary_stakeholder.first_name %></a> <%= time_ago_in_words(@decision.created_at)%> ago<% end %></span>
   </div>
 </div>
 
