@@ -13,7 +13,7 @@
 </div>
 
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-10 col-md-offset-1">
     <form action="/update_decision/<%= @decision.id %>" method="post">
       <!-- Hidden input for authenticity token to protect from forgery -->
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
@@ -44,15 +44,15 @@
         Update Decision
       </button>
       or
-      <a href="/decisions/<%= @decision.id %>">Cancel</a>
+      <a href="/decisions/<%= @decision.id %>">Back</a>
     </form>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-md-12">
-    <h3>Add Options</h3>
-    <em>Enter the options you are choosing between.</em>
+  <div class="col-md-4 col-md-offset-1">
+    <h3>STEP 1: Add Options</h3>
+    <em>List options you are choosing between. You should enter at least 2 options.</em>
     <p></p>
     <% @decision.options.each do |option| %>
     <ul>
@@ -62,24 +62,28 @@
     </ul>
     <% end %>
     <li class="list-unstyled">
-
       <form action="/create_option" method="post">
         <!-- Hidden input for authenticity token to protect from forgery -->
         <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
-        <input type="text" id="name" name="name" placeholder="Add an option..." class="form-control" value="">
+        <div class="form-group">
+          <input type="text" id="name" name="name" placeholder="Add an option..." class="form-control" value="">
+          <input type="hidden" name="decision_id" value="<%= @decision.id %>">
+        </div>
 
         <input type="hidden" id="user_id" name="user_id" class="form-control" value="<%= current_user.id %>">
 
-        <input type="hidden" name="decision_id" value="<%= @decision.id %>">
 
+        <button class="btn btn-primary">
+          Add Option
+        </button>
       </form>
     </li>
-    <p>
-    </p>
+  </div>
 
-    <h3>Add Criteria</h3>
-    <em>Select your level of importance and enter each criteria you wish to evaluate.</em>
+  <div class="col-md-4 col-md-offset-1">
+    <h3>STEP 2: Add Criteria</h3>
+    <em>Enter each criteria you wish to evaluate and select its level of importance.</em>
     <p></p>
 
     <% @decision.criterium.each do |criteria| %>
@@ -92,11 +96,16 @@
       </li>
     </ul>
     <% end %>
-    <li class="list-unstyled">
-      <form action="/create_criterium" method="post">
-        <!-- Hidden input for authenticity token to protect from forgery -->
-        <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 
+    <form action="/create_criterium" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <div class="form-group">
+        <input type="text" id="name" name="name" placeholder="Add criteria..." class="form-control" value="">
+      </div>
+
+      <div class="form-group">
         <select id="weight" name="weight" class="form-control" value="">
           <option value="1">1 (least important)</option>
           <option value="2">2</option>
@@ -104,13 +113,28 @@
           <option value="4">4</option>
           <option value="5">5 (most important)</option>
         </select>
+      </div>
 
-        <input type="text" id="name" name="name" placeholder="Add criteria..." class="form-control" value="">
+      <input type="hidden" id="user_id" name="user_id" class="form-control" value="<%= current_user.id %>">
 
-        <input type="hidden" id="user_id" name="user_id" class="form-control" value="<%= current_user.id %>">
+      <input type="hidden" name="decision_id" value="<%= @decision.id %>">
 
-        <input type="hidden" name="decision_id" value="<%= @decision.id %>">
-      </form>
-    </li>
+      <button class="btn btn-primary">
+        Add Criteria
+      </button>
+
+    </form>
+
   </div>
 </div>
+
+<div class="row">
+  <div class="col-md-4 col-md-offset-1">
+    <h3>STEP 3: Invite Contributors</h3>
+    <em>Invite people you know to weigh-in on this decision.</em>
+  </div>
+</div>
+
+<footer>
+  <p></p>
+</footer>

@@ -6,28 +6,26 @@
 </div>
 
 
-<div class="row">
-  <div class="col-md-3 col-md-offset-1">
-
-    <% @decisions.each do |decision| %>
-
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <% if decision.primary_stakeholder.present? %>
-        <a href="/users/<%= decision.id %>">
-          <%= decision.name %>
-        </a>
-        <p><%= decision.description %></p>
-        <% end %>
-      </div>
-      <div class="panel-footer">
-        <a href="/decisions/<%= decision.id %>" class="btn btn-primary">Show</a>
-        <a href="/decisions/<%= decision.id %>/edit" class="btn btn-warning">Edit</a>
-        <a href="/delete_decision/<%= decision.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
-      </div>
+<div class="row equal">
+  <% @decisions.each do |decision| %>
+   <div class="col-md-4">
+  <div class="panel panel-default ">
+    <div class="panel-body">
+      <% if decision.primary_stakeholder.present? %>
+      <a href="/decisions/<%= decision.id %>">
+        <%= decision.name %>
+      </a>
+      <p style="height:50px;"><%= truncate(decision.description, length:150) %></p>
     </div>
     <% end %>
 
-    <%= paginate @decisions, theme: 'twitter-bootstrap-4' %>
+    <div class="panel-footer">
+      <a href="/decisions/<%= decision.id %>" class="btn btn-primary">Show</a>
+      <a href="/decisions/<%= decision.id %>/edit" class="btn btn-warning">Edit</a>
+      <a href="/delete_decision/<%= decision.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+    </div>
   </div>
+</div>
+  <% end %>
+
 </div>

@@ -40,11 +40,18 @@
 
             <tr>
               <th>TOTAL SCORE</th>
-              <td class="text-center">
-                <strong>
 
-              </strong>
-              </td>
+                  <% @decision.options.each do |option| %>
+                  <td class="text-center">
+                    <strong>
+                    <% @decision.criterium.each do |criterium| %>
+                    <% a = @response.where(:criteria_id => criterium.id, :option_id => option.id).pluck(:vote) * criterium.weight %>
+                    <%= a.sum %>
+                  <% end %>
+                  <% end %>
+                </strong>
+
+                </td>
 
             </tr>
           </tbody>

@@ -36,7 +36,7 @@ class DecisionsController < ApplicationController
 
       case referer
       when "/decisions/new", "/create_decision"
-        redirect_to("/decisions")
+              redirect_to("/decisions/#{@decision.id}/edit", :notice => "Decision created successfully.")
       else
         redirect_back(:fallback_location => "/", :notice => "Decision created successfully.")
       end
