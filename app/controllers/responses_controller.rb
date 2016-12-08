@@ -33,11 +33,13 @@ class ResponsesController < ApplicationController
 
   def create
     @decision = Decision.new
+    @criterium = Criterium.find(params[:criteria_id])
     @response = Response.new
     @response.user_id = params[:user_id]
     @response.vote = params[:vote]
     @response.criteria_id = params[:criteria_id]
     @response.option_id = params[:option_id]
+    @response.calc = (params[:c])
 
     save_status = @response.save
 

@@ -40,13 +40,20 @@
 
             <tr>
               <th>TOTAL SCORE</th>
+              <% @decision.options.each do |option| %>
+
               <td class="text-center">
                 <strong>
-                  
+
+                  <% a = @response.where(:option_id => option.id).pluck(:calc) %>
+
+                  <% b = @response.where(:option_id => option.id).pluck(:vote) %>
+
+                  <%= a.zip(b).map{|x, y| x * y}.sum %>
+
+                  <% end %>
                 </strong>
-
               </td>
-
             </tr>
           </tbody>
         </table>
