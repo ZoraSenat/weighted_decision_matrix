@@ -9,9 +9,9 @@
 <% end %>
 
 <div class="page-header">
-  <h3>Add Response</h3>
+  <h3>Submit Your Votes</h3>
+  <h4><em>Vote on each option on a scale from 1 to 5 as it relates to your criteria</em></h4>
 </div>
-
 
 <table class="table table-bordered">
   <thead>
@@ -36,17 +36,22 @@
         <td class="text-center">
           <div class="form-group">
             <!-- Label and input for vote -->
+            <%if @decision.responses.find_by(:option_id => option.id, :criteria_id => criterium.id, :user_id => current_user).present? %>
 
+            <div class="form-group text-center"><strong>Your Vote: <%= @decision.responses.find_by(:option_id => option.id, :criteria_id => criterium.id, :user_id => current_user).vote %></strong>
+            </div>
+            <div class="form-group text-center">
+              <a href="/delete_response/<%= @decision.responses.find_by(:option_id => option.id, :criteria_id => criterium.id, :user_id => current_user).id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+            </div>
 
+            <% else %>
             <select id="vote" name="vote" class="form-control">
-              <option value="1">1</option>
+              <option value="1"> 1 (worst) </option>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
-              <option value="5">5</option>
+              <option value="5">5 (best)</option>
             </select>
-
-
           </div>
           <!-- Hidden input for authenticity token to protect from forgery -->
           <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
@@ -56,15 +61,20 @@
 
           <!-- Label and input for criteria_id -->
           <input type="hidden" name="criteria_id" value="<%= criterium.id %>">
+
           <!-- Label and input for option_id -->
           <input type="hidden" name="option_id" class="form-control" value="<%= option.id %>">
 
           <!-- Label and input for calc multiplier -->
-          <input type="text" name="c" class="form-control" value="<%= criterium.weight %>">
+          <input type="hidden" name="c" class="form-control" value="<%= criterium.weight %>">
+
+          <!-- Label and input for decision_id -->
+          <input type="hidden" name="d" class="form-control" value="<%= option.decision_id %>">
 
           <button class="btn btn-success">
             Submit
           </button>
+          <%end %>
         </form>
       </td>
       <% end %>
@@ -75,8 +85,8 @@
 
 <a href="/decisions/<%= @decision.id %>">
   <button class="btn btn-warning">
-  Back to Decision
-</button></a>
+    Back to Decision
+  </button></a>
 
-
+<div  class="pb-4">
 </div>

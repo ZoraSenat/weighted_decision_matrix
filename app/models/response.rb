@@ -3,20 +3,18 @@ class Response < ApplicationRecord
 
   belongs_to :option
 
-  belongs_to :criterium, :foreign_key => "criteria_id"
+  has_one :criterium, :foreign_key => "criteria_id"
 
   belongs_to :user
 
-  # Indirect associations
-
-  has_one    :decision,
-             :through => :criterium,
-             :source => :decision
+  belongs_to :decision
 
   # Validations
 
   validates :user_id, :presence => true
 
-  validates :vote, :presence => true
+    validates :vote, :presence => true
+
+    validates :vote, numericality: true
 
 end

@@ -2,12 +2,24 @@
   <h2><%= @decision.name %></h2>
   <h4><em><%= @decision.description %></em></h4>
   <span class="text-muted"> Posted by
-    <% if @decision.primary_stakeholder.present? %>
     <a href="/users/<%= @decision.user_id %>">
-      <%= @decision.primary_stakeholder.first_name %></a> <%= time_ago_in_words(@decision.created_at)%> ago<% end %></span>
-    </div>
+      <%= @decision.primary_stakeholder.first_name %></a> <%= time_ago_in_words(@decision.created_at)%> ago
+    </span>
+  </div>
+
+  <%if @decision.responses.find_by(:user_id => current_user).present? %>
+
+  <h4>The winner is
+    <% a = @decision.responses.each do |response| %>
+    <% end %>
+    <% b = a.max_by { |x| x.calc * x.vote }  %>
+    <%= b.option.name %>!</h4>
 
     <a href="/decisions/<%= @decision.id %>/responses/new">Vote on this decision</a>
+    <% else %>
+    There are no votes on this decision. <a href="/decisions/<%= @decision.id %>/responses/new">Vote on this decision.</a>
+    <% end  %>
+
 
     <p></p>
 
@@ -75,7 +87,7 @@
 
     <!-- A Decision has many comments -->
 
-    <div class="row">
+    <div class="row pb-3">
       <div class="col-md-8 col-md-offset-2">
         <ul class="list-group">
           <li class="list-group-item list-group-item-info">
@@ -84,21 +96,18 @@
 
           <% @decision.comments.each do |comment| %>
           <li class="list-group-item">
-            <%= comment.message %>
-            <p class="italics">
-              <%= comment.user.first_name %>
-            </p>
-            <div class="btn-group btn-group-xs pull-right">
-              <a href="/comments/<%= comment.id %>" class="btn btn-primary">
-                <i class="fa fa-search-plus"></i>
+            <article>
+              <img alt="Zora Senat" class="img-circle avatar" height="45" src="<%= comment.user.image_url %>" title="Zora Senat" width="45">
+              <strong>&emsp;<%= comment.user.first_name %> says:  </strong><%= comment.message %>
+
+              <span class="pull-right">
+                <span class="text-muted"><%= time_ago_in_words(comment.created_at)%> ago</span>
+                <a href="/delete_comment/<%= comment.id %>" rel="nofollow">
+                  <i class="fa fa-trash-o"></i>
+                </span>
               </a>
-              <a href="/comments/<%= comment.id %>/edit" class="btn btn-warning">
-                <i class="fa fa-edit"></i>
-              </a>
-              <a href="/delete_comment/<%= comment.id %>" class="btn btn-danger" rel="nofollow">
-                <i class="fa fa-trash-o"></i>
-              </a>
-            </div>
+
+            </article>
           </li>
           <% end %>
 

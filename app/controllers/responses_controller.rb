@@ -39,7 +39,8 @@ class ResponsesController < ApplicationController
     @response.vote = params[:vote]
     @response.criteria_id = params[:criteria_id]
     @response.option_id = params[:option_id]
-    @response.calc = (params[:c])
+    @response.calc = params[:c]
+    @response.decision_id = params[:d]
 
     save_status = @response.save
 

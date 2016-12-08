@@ -18,8 +18,7 @@ class Decision < ApplicationRecord
   # Indirect associations
 
   has_many   :responses,
-             :through => :criterium, :foreign_key => "criteria_id",
-             :source => :responses
+             :dependent => :destroy
 
   # Validations
 

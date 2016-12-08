@@ -12,6 +12,7 @@ class DecisionsController < ApplicationController
     @criterium = Criterium.new
     @response = Response.all
     @decision = Decision.find(params[:id])
+    
 
     render("decisions/show.html.erb")
   end
