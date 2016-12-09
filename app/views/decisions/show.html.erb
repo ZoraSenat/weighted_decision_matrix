@@ -9,9 +9,9 @@
 
   <%if @decision.responses.find_by(:user_id => current_user).present? %>
 
-  <h4>The winner is
+  <h4>The winner is the option with the highest score:
 
-    <% a = @decision.responses.each do |response| %>
+    <!-- <% a = @decision.responses.each do |response| %>
     <% end %>
     <% b = a.pluck(:vote) %>
     <% c = a.pluck(:calc) %>
@@ -19,10 +19,11 @@
 
     <% e = b.zip(c).map{|x, y| x * y} %>
     <%= e.zip(d) %>
+    <% [d,e].transpose.to_h %> -->
 
-    !</h4>
+    </h4>
 
-    <a href="/decisions/<%= @decision.id %>/responses/new">Vote on this decision</a>
+    <a href="/decisions/<%= @decision.id %>/responses/new">Edit your votes on this decision</a>
     <% else %>
     There are no votes on this decision. <a href="/decisions/<%= @decision.id %>/responses/new">Vote on this decision.</a>
     <% end  %>
