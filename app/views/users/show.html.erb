@@ -1,45 +1,5 @@
 <div class="page-header">
-  <h3>User #<%= @user.id %></h3>
-</div>
-
-<div class="row">
-  <div class="col-md-12 mb-2">
-    <dl class="dl-horizontal">
-      <dt>Email</dt>
-      <dd><%= @user.email %></dd>
-
-      <dt>Password</dt>
-      <dd><%= @user.password %></dd>
-
-      <dt>Job title</dt>
-      <dd><%= @user.job_title %></dd>
-
-      <dt>Company</dt>
-      <dd>
-        <% if @user.company.present? %>
-          <a href="/companies/<%= @user.company_id %>">
-            <%= @user.company.company_name %>
-          </a>
-        <% end %>
-      </dd>
-
-      <dt>Phone</dt>
-      <dd><%= @user.phone %></dd>
-
-      <dt>First name</dt>
-      <dd><%= @user.first_name %></dd>
-
-      <dt>Last name</dt>
-      <dd><%= @user.last_name %></dd>
-
-    </dl>
-
-    <div class="btn-group btn-group-justified">
-      <a href="/users" class="btn btn-primary">
-        Back
-      </a>
-    </div>
-  </div>
+  <h3><img alt="Zora Senat" class="img-circle avatar" height="60" src="<%= @user.image_url %>" title="Zora Senat" width="60">  <%= @user.first_name %> <%= @user.last_name[0] %>.</h3>
 </div>
 
 <!-- A User has many decisions -->
@@ -54,8 +14,9 @@
       <% @user.decisions.each do |decision| %>
         <li class="list-group-item">
           <a href="/decisions/<%= decision.id %>">
-            <%= decision.user_id %>
+            <%= decision.name %>
           </a>
+          <em><span class="text-muted"> created <%= time_ago_in_words(decision.created_at)%> ago</span></em>
           <div class="btn-group btn-group-xs pull-right">
             <a href="/decisions/<%= decision.id %>" class="btn btn-primary">
               <i class="fa fa-search-plus"></i>
@@ -75,68 +36,14 @@
   </div>
 </div>
 
-<!-- A User has many responses -->
 
 <div class="row">
-  <div class="col-md-12">
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-info">
-        Responses
-      </li>
+  <div class="col-md-12 mb-2">
 
-      <% @user.responses.each do |response| %>
-        <li class="list-group-item">
-          <a href="/responses/<%= response.id %>">
-            <%= response.created_at %>
-          </a>
-          <div class="btn-group btn-group-xs pull-right">
-            <a href="/responses/<%= response.id %>" class="btn btn-primary">
-              <i class="fa fa-search-plus"></i>
-            </a>
-            <%if current_user == response.user %>
-              <a href="/responses/<%= response.id %>/edit" class="btn btn-warning">
-                <i class="fa fa-edit"></i>
-              </a>
-              <a href="/delete_response/<%= response.id %>" class="btn btn-danger" rel="nofollow">
-                <i class="fa fa-trash-o"></i>
-              </a>
-            <% end %>
-          </div>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-</div>
-
-<!-- A User has many comments -->
-
-<div class="row">
-  <div class="col-md-12">
-    <ul class="list-group">
-      <li class="list-group-item list-group-item-info">
-        Comments
-      </li>
-
-      <% @user.comments.each do |comment| %>
-        <li class="list-group-item">
-          <a href="/comments/<%= comment.id %>">
-            <%= comment.decision_id %>
-          </a>
-          <div class="btn-group btn-group-xs pull-right">
-            <a href="/comments/<%= comment.id %>" class="btn btn-primary">
-              <i class="fa fa-search-plus"></i>
-            </a>
-            <%if current_user == comment.user %>
-              <a href="/comments/<%= comment.id %>/edit" class="btn btn-warning">
-                <i class="fa fa-edit"></i>
-              </a>
-              <a href="/delete_comment/<%= comment.id %>" class="btn btn-danger" rel="nofollow">
-                <i class="fa fa-trash-o"></i>
-              </a>
-            <% end %>
-          </div>
-        </li>
-      <% end %>
-    </ul>
+    <div class="btn-group btn-group-justified">
+      <a href="/users" class="btn btn-primary">
+        Back
+      </a>
+    </div>
   </div>
 </div>

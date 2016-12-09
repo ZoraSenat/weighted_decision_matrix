@@ -7,154 +7,177 @@
     </span>
   </div>
 
-  <%if @decision.responses.find_by(:user_id => current_user).present? %>
-
-  <h4>The winner is:
+  <% if @decision.options.present? &&  @decision.criterium.present? %>
+    <% if @decision.responses.present? %>
+    <h4>The winner is:
       <% winner_score = 0 %>
       <% winner_id = [] %>
       <% @decision.options.each do |option| %>
-        <% option_sum = 0 %>
-        <% @decision.criterium.each do |criteria| %>
-          <% cell_sum = 0 %>
-          <% Response.where(:option_id => option.id, :criteria_id => criteria.id).each do |response| %>
-            <% weight = response.calc %>
-            <% ranking = response.vote %>
-            <% response_score = weight * ranking %>
-            <% cell_sum = cell_sum + response_score %>
-          <% end %>
-          <% option_sum = option_sum + cell_sum %>
-        <% end %>
-        <% if option_sum > winner_score %>
-          <% winner_score = option_sum %>
-          <% winner_id = [option.id] %>
-        <% elsif option_sum == winner_score %>
-          <% winner_id.push option.id %>
-        <% end %>
+      <% option_sum = 0 %>
+      <% @decision.criterium.each do |criteria| %>
+      <% cell_sum = 0 %>
+      <% Response.where(:option_id => option.id, :criteria_id => criteria.id).each do |response| %>
+      <% weight = response.calc %>
+      <% ranking = response.vote %>
+      <% response_score = weight * ranking %>
+      <% cell_sum = cell_sum + response_score %>
+      <% end %>
+      <% option_sum = option_sum + cell_sum %>
+      <% end %>
+      <% if option_sum > winner_score %>
+      <% winner_score = option_sum %>
+      <% winner_id = [option.id] %>
+      <% elsif option_sum == winner_score %>
+      <% winner_id.push option.id %>
+      <% end %>
       <% end %>
       <%= Option.where(:id => winner_id).pluck(:name).join(", ") %>!</h4>
 
-    <a href="/decisions/<%= @decision.id %>/responses/new">Edit your votes on this decision</a>
-    <% else %>
-    There are no votes on this decision. <a href="/decisions/<%= @decision.id %>/responses/new">Vote on this decision.</a>
-    <% end  %>
+      <%if @decision.responses.find_by(:user_id => current_user).present? %>
+      <a href="/decisions/<%= @decision.id %>/responses/new">Edit your votes on this decision</a>
+      <% else %>
+      You have not voted on this decision. <a href="/decisions/<%= @decision.id %>/responses/new">Vote on this decision.</a>
+      <% end  %>
+      <% end %>
 
+      <p></p>
 
-    <p></p>
-
-    <div class="row">
-      <div class="col-md-12 mb-2">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>
-                Criteria
-              </th>
-              <% @decision.options.each do |option| %>
-              <th class="text-center">
-                <%= option.name %>
-              </th>
-              <%end%>
-            </tr>
-          </thead>
-          <tbody>
-            <% @decision.criterium.each do |criterium| %>
-            <tr>
-              <th scope="row"><%= criterium.name %> (<%= criterium.weight %>)</th>
-              <% @decision.options.each do |option| %>
-              <td class="text-center">
-                <%= @response.where(:criteria_id => criterium.id, :option_id => option.id).pluck(:vote).sum * criterium.weight %>
-              </td>
+      <div class="row">
+        <div class="col-md-12 mb-2">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>
+                  Criteria
+                </th>
+                <% @decision.options.each do |option| %>
+                <th class="text-center">
+                  <%= option.name %>
+                </th>
+                <%end%>
+              </tr>
+            </thead>
+            <tbody>
+              <% @decision.criterium.each do |criterium| %>
+              <tr>
+                <th scope="row"><%= criterium.name %> (<%= criterium.weight %>)</th>
+                <% @decision.options.each do |option| %>
+                <td class="text-center">
+                  <%= @response.where(:criteria_id => criterium.id, :option_id => option.id).pluck(:vote).sum * criterium.weight %>
+                </td>
+                <% end %>
+              </tr>
               <% end %>
-            </tr>
+
+              <tr>
+                <th>TOTAL SCORE</th>
+                <% @decision.options.each do |option| %>
+
+                <td class="text-center">
+                  <strong>
+
+                    <% a = @response.where(:option_id => option.id).pluck(:calc) %>
+
+                    <% b = @response.where(:option_id => option.id).pluck(:vote) %>
+
+                    <%= a.zip(b).map{|x, y| x * y}.sum %>
+
+                    <% end %>
+                  </strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p></p>
+          <div class="btn-group btn-group-justified">
+            <a href="/decisions" class="btn btn-primary">
+              Back
+            </a>
+            <% if @decision.user_id == current_user.id %>
+            <a href="/decisions/<%= @decision.id %>/edit" class="btn btn-warning">
+              Edit
+            </a>
+            <a href="/delete_decision/<%= @decision.id %>" class="btn btn-danger" rel="nofollow">
+              Delete
+            </a>
             <% end %>
 
-            <tr>
-              <th>TOTAL SCORE</th>
-              <% @decision.options.each do |option| %>
+          </div>
+        </div>
+      </div>
 
-              <td class="text-center">
-                <strong>
+      <!-- A Decision has many comments -->
 
-                  <% a = @response.where(:option_id => option.id).pluck(:calc) %>
+      <div class="row pb-3">
+        <div class="col-md-8 col-md-offset-2">
+          <ul class="list-group">
+            <li class="list-group-item list-group-item-info">
+              Comments
+            </li>
 
-                  <% b = @response.where(:option_id => option.id).pluck(:vote) %>
+            <% @decision.comments.each do |comment| %>
+            <li class="list-group-item">
+              <article>
+                <img alt="Zora Senat" class="img-circle avatar" height="45" src="<%= comment.user.image_url %>" title="Zora Senat" width="45">
+                <strong>&emsp;<%= comment.user.first_name %> says:  </strong><%= comment.message %>
 
-                  <%= a.zip(b).map{|x, y| x * y}.sum %>
+                <span class="pull-right">
+                  <span class="text-muted"><%= time_ago_in_words(comment.created_at)%> ago</span>
+                  <% if comment.user_id == current_user.id %>
+                  <a href="/delete_comment/<%= comment.id %>" rel="nofollow">
+                    <i class="fa fa-trash-o"></i>
+                    <% else %>
+                    <% end %>
+                  </span>
+                </a>
 
-                  <% end %>
-                </strong>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </article>
+            </li>
+            <% end %>
 
-        <p></p>
-        <div class="btn-group btn-group-justified">
-          <a href="/decisions" class="btn btn-primary">
-            Back
-          </a>
-          <a href="/decisions/<%= @decision.id %>/edit" class="btn btn-warning">
-            Edit
-          </a>
-          <a href="/delete_decision/<%= @decision.id %>" class="btn btn-danger" rel="nofollow">
-            Delete
-          </a>
+            <li class="list-group-item">
+              <form action="/create_comment" method="post">
+                <!-- Hidden input for authenticity token to protect from forgery -->
+                <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+                <!-- Label and input for decision_id -->
+                <input type="hidden" name="decision_id" value="<%= @decision.id %>">
+
+                <!-- Label and input for message -->
+                <div class="form-group">
+
+                  <textarea id="message" name="message" placeholder="Message" class="form-control" rows="3"></textarea>
+                </div>
+
+                <!-- Label and input for user_id -->
+                <input type="hidden" name="user_id" value="<%= current_user.id %>">
+
+                <button class="btn btn-block btn-success">
+                  Create Comment
+                </button>
+              </form>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
 
-    <!-- A Decision has many comments -->
+      <% else %>
 
-    <div class="row pb-3">
-      <div class="col-md-8 col-md-offset-2">
-        <ul class="list-group">
-          <li class="list-group-item list-group-item-info">
-            Comments
-          </li>
+      <h4>There are no Options or Criteria set for this Decision. <% if @decision.user_id == current_user.id %><a href="/decisions/<%= @decision.id %>/edit">Add Options and Criteria for this Decision</a><% end %> </h4>
+      <div class="btn-group btn-group-justified">
+<p></p>
+        <a href="/decisions" class="btn btn-primary">
+          Back
+        </a>
+        <% if @decision.user_id == current_user.id %>
+        <a href="/decisions/<%= @decision.id %>/edit" class="btn btn-warning">
+          Edit
+        </a>
+        <a href="/delete_decision/<%= @decision.id %>" class="btn btn-danger" rel="nofollow">
+          Delete
+        </a>
 
-          <% @decision.comments.each do |comment| %>
-          <li class="list-group-item">
-            <article>
-              <img alt="Zora Senat" class="img-circle avatar" height="45" src="<%= comment.user.image_url %>" title="Zora Senat" width="45">
-              <strong>&emsp;<%= comment.user.first_name %> says:  </strong><%= comment.message %>
-
-              <span class="pull-right">
-                <span class="text-muted"><%= time_ago_in_words(comment.created_at)%> ago</span>
-                <% if comment.user_id == current_user.id %>
-                <a href="/delete_comment/<%= comment.id %>" rel="nofollow">
-                  <i class="fa fa-trash-o"></i>
-                  <% else %>
-                  <% end %>
-                </span>
-              </a>
-
-            </article>
-          </li>
-          <% end %>
-
-          <li class="list-group-item">
-            <form action="/create_comment" method="post">
-              <!-- Hidden input for authenticity token to protect from forgery -->
-              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-
-              <!-- Label and input for decision_id -->
-              <input type="hidden" name="decision_id" value="<%= @decision.id %>">
-
-              <!-- Label and input for message -->
-              <div class="form-group">
-
-                <textarea id="message" name="message" placeholder="Message" class="form-control" rows="3"></textarea>
-              </div>
-
-              <!-- Label and input for user_id -->
-              <input type="hidden" name="user_id" value="<%= current_user.id %>">
-
-              <button class="btn btn-block btn-success">
-                Create Comment
-              </button>
-            </form>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+    <% end %>
+    <% end %>
