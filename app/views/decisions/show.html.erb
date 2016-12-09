@@ -10,10 +10,17 @@
   <%if @decision.responses.find_by(:user_id => current_user).present? %>
 
   <h4>The winner is
+
     <% a = @decision.responses.each do |response| %>
     <% end %>
-    <% b = a.max_by { |x| x.calc * x.vote }  %>
-    <%= b.option.name %>!</h4>
+    <% b = a.pluck(:vote) %>
+    <% c = a.pluck(:calc) %>
+    <% d = a.pluck(:option_id) %>
+
+    <% e = b.zip(c).map{|x, y| x * y} %>
+    <%= e.zip(d) %>
+
+    !</h4>
 
     <a href="/decisions/<%= @decision.id %>/responses/new">Vote on this decision</a>
     <% else %>
