@@ -1,6 +1,6 @@
 <div class="page-header">
   <h1>
-    Users
+    WDM Users
     <a href="/users/new" class="btn btn-lg btn-success">New User</a>
   </h1>
 </div>
@@ -9,31 +9,17 @@
   <div class="col-md-12">
     <table class="table table-striped table-hover">
       <tr>
-        <th>Email</th>
-        <th>Password</th>
-        <th>Job title</th>
-        <th>Company</th>
-        <th>Phone</th>
-        <th>First name</th>
-        <th>Last name</th>
+        <th>Name</th>
+        <th># Decisions</th>
+        <th># Weigh-Ins</th>
         <th>Actions</th>
       </tr>
 
       <% @users.each do |user| %>
       <tr>
-        <td><%= user.email %></td>
-        <td><%= user.password %></td>
-        <td><%= user.job_title %></td>
-        <td>
-          <% if user.company.present? %>
-            <a href="/companies/<%= user.company.id %>">
-              <%= user.company.company_name %>
-            </a>
-          <% end %>
-        </td>
-        <td><%= user.phone %></td>
-        <td><%= user.first_name %></td>
-        <td><%= user.last_name %></td>
+        <td><%= user.first_name %> <%= user.last_name %></td>
+        <td><%= user.decisions.count %></td>
+        <td><%= user.responses.count %></td>
         <td>
           <a href="/users/<%= user.id %>" class="btn btn-primary">Show</a>
         </td>

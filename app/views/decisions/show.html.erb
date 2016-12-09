@@ -9,19 +9,29 @@
 
   <%if @decision.responses.find_by(:user_id => current_user).present? %>
 
-  <h4>The winner is the option with the highest score:
-
-    <!-- <% a = @decision.responses.each do |response| %>
-    <% end %>
-    <% b = a.pluck(:vote) %>
-    <% c = a.pluck(:calc) %>
-    <% d = a.pluck(:option_id) %>
-
-    <% e = b.zip(c).map{|x, y| x * y} %>
-    <%= e.zip(d) %>
-    <% [d,e].transpose.to_h %> -->
-
-    </h4>
+  <h4>The winner is:
+      <% winner_score = 0 %>
+      <% winner_id = [] %>
+      <% @decision.options.each do |option| %>
+        <% option_sum = 0 %>
+        <% @decision.criterium.each do |criteria| %>
+          <% cell_sum = 0 %>
+          <% Response.where(:option_id => option.id, :criteria_id => criteria.id).each do |response| %>
+            <% weight = response.calc %>
+            <% ranking = response.vote %>
+            <% response_score = weight * ranking %>
+            <% cell_sum = cell_sum + response_score %>
+          <% end %>
+          <% option_sum = option_sum + cell_sum %>
+        <% end %>
+        <% if option_sum > winner_score %>
+          <% winner_score = option_sum %>
+          <% winner_id = [option.id] %>
+        <% elsif option_sum == winner_score %>
+          <% winner_id.push option.id %>
+        <% end %>
+      <% end %>
+      <%= Option.where(:id => winner_id).pluck(:name).join(", ") %>!</h4>
 
     <a href="/decisions/<%= @decision.id %>/responses/new">Edit your votes on this decision</a>
     <% else %>
@@ -110,8 +120,11 @@
 
               <span class="pull-right">
                 <span class="text-muted"><%= time_ago_in_words(comment.created_at)%> ago</span>
+                <% if comment.user_id == current_user.id %>
                 <a href="/delete_comment/<%= comment.id %>" rel="nofollow">
                   <i class="fa fa-trash-o"></i>
+                  <% else %>
+                  <% end %>
                 </span>
               </a>
 

@@ -1,28 +1,63 @@
 <div class="page-header">
   <h1>
-    Decisions
-    <a href="/decisions/new" class="btn btn-lg btn-success">New Decision</a>
-  </h1>
+    <%= current_user.first_name %>'s Decisions
+
+    <a href="/decisions/new" class="btn btn-lg btn-success pull-right">New Decision</a>
+      </h1>
 </div>
 
-
 <div class="row equal">
-  <% @decisions.each do |decision| %>
+  <% @decisions.where(:user_id => current_user.id).each do |decision| %>
    <div class="col-md-4">
-  <div class="panel panel-default ">
-    <div class="panel-body">
+  <div class="panel panel-default">
+    <div class="panel-body" style="min-height: 150px; max-height: 150px">
       <% if decision.primary_stakeholder.present? %>
-      <a href="/decisions/<%= decision.id %>">
-        <%= decision.name %>
+      <a class="decision lead" href="/decisions/<%= decision.id %>">
+      <%= truncate(decision.name, length:150) %>
       </a>
-      <p style="height:50px;"><%= truncate(decision.description, length:150) %></p>
+      <p class="text-muted description" style="max-height:50px;"><%= truncate(decision.description, length:150) %></p>
+      <p class="text-muted last_update" font-size:small> Last Updated <%= time_ago_in_words(decision.updated_at)%> ago
+      </p>
     </div>
     <% end %>
 
     <div class="panel-footer">
       <a href="/decisions/<%= decision.id %>" class="btn btn-primary">Show</a>
       <a href="/decisions/<%= decision.id %>/edit" class="btn btn-warning">Edit</a>
+      <a href="/decisions/<%= decision.id %>/responses/new" class="btn btn-success">Vote</a>
       <a href="/delete_decision/<%= decision.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+    </div>
+  </div>
+</div>
+  <% end %>
+
+</div>
+
+<div class="page-header">
+  <h1>
+    Other User's Decisions
+</div>
+
+<div class="row equal">
+
+  <% @decisions.where.not(:user_id => current_user.id).each do |decision| %>
+  <div class="col-md-4">
+     <div class="panel panel-default">
+       <div class="panel-body" style="min-height: 175px; max-height: 175px">
+         <span>
+      <img alt="Zora Senat" class="img-circle avatar" height="45" src="<%= decision.primary_stakeholder.image_url %>" title="Zora Senat" width="45">
+    </span>
+      <a class="decision lead" href="/decisions/<%= decision.id %>">
+      <%= truncate(decision.name, length:150) %>
+      </a>
+      <p class="text-muted description"><%= truncate(decision.description, length:150) %></p>
+      <p class="text-muted last_update"> Last Updated <%= time_ago_in_words(decision.updated_at)%> ago
+      </p>
+    </div>
+
+    <div class="panel-footer">
+      <a href="/decisions/<%= decision.id %>" class="btn btn-primary">Show</a>
+      <a href="/decisions/<%= decision.id %>/responses/new" class="btn btn-success">Vote</a>
     </div>
   </div>
 </div>
