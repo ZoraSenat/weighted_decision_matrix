@@ -33,11 +33,11 @@
       <% end %>
       <%= Option.where(:id => winner_id).pluck(:name).join(", ") %>!</h4>
 
+      <% end  %>
       <%if @decision.responses.find_by(:user_id => current_user).present? %>
       <a href="/decisions/<%= @decision.id %>/responses/new">Edit your votes on this decision</a>
       <% else %>
       You have not voted on this decision. <a href="/decisions/<%= @decision.id %>/responses/new">Vote on this decision.</a>
-      <% end  %>
       <% end %>
 
       <p></p>
